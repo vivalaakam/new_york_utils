@@ -96,6 +96,14 @@ impl<T: Default + Clone + Debug> Matrix<T> {
         vec![self.columns, self.rows]
     }
 
+    pub fn get_columns(&self) -> usize {
+        self.columns
+    }
+
+    pub fn get_rows(&self) -> usize {
+        self.rows
+    }
+
     /**
     get raw matrix data
 
