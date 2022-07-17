@@ -7,6 +7,15 @@ pub struct Matrix<T> {
 }
 
 impl<T: Default + Clone> Matrix<T> {
+    /*!
+    Constructs a new, empty `Matrix<T>`.
+
+    # Examples
+
+    ```
+    let mut matrix = Matrix::new(3, 4);
+    ```
+     */
     pub fn new(width: usize, height: usize) -> Self {
         Matrix {
             width,
@@ -15,6 +24,17 @@ impl<T: Default + Clone> Matrix<T> {
         }
     }
 
+    /*!
+    get item from matrix.
+
+    # Examples
+
+    ```
+    let result = matrix.get(1, 2);
+    assert_eq!(result.is_ok(), true);
+    assert_eq!(result.unwrap(), 0.0);
+    ```
+     */
     pub fn get(&self, w: usize, h: usize) -> UtilsResult<T> {
         let pos = self.get_pos(w, h);
 
@@ -28,6 +48,17 @@ impl<T: Default + Clone> Matrix<T> {
         }
     }
 
+    /*!
+    set item to matrix.
+
+    # Examples
+
+    ```
+    let result = matrix.set(1, 2, 1.0);
+    assert_eq!(result.is_ok(), true);
+    assert_eq!(matrix.get(1, 2).unwrap(), 1.0);
+    ```
+    */
     pub fn set(&mut self, w: usize, h: usize, val: T) -> UtilsResult<()> {
         let pos = self.get_pos(w, h);
 
@@ -67,4 +98,6 @@ mod tests {
         assert_eq!(matrix.get(3, 3).is_ok(), false);
         assert_eq!(matrix.get(2, 4).is_ok(), false);
     }
+}
+
 }
