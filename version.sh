@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+cargo test
+
 current_version=$(cat Cargo.toml | grep 'version = "*"' | head -1 | awk -F = '{ print $2 }' | sed 's/[", ]//g')
 
 major=$(echo $current_version | awk -F . '{print $1}')
