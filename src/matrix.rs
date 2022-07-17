@@ -7,13 +7,15 @@ pub struct Matrix<T> {
 }
 
 impl<T: Default + Clone> Matrix<T> {
-    /*!
+    /**
     Constructs a new, empty `Matrix<T>`.
 
     # Examples
 
     ```
-    let mut matrix = Matrix::new(3, 4);
+    use new_york_utils::Matrix;
+
+    let mut matrix: Matrix<f64> = Matrix::new(3, 4);
     ```
      */
     pub fn new(width: usize, height: usize) -> Self {
@@ -24,12 +26,15 @@ impl<T: Default + Clone> Matrix<T> {
         }
     }
 
-    /*!
+    /**
     get item from matrix.
 
     # Examples
 
     ```
+    use new_york_utils::Matrix;
+
+    let mut matrix: Matrix<f64> = Matrix::new(3, 4);
     let result = matrix.get(1, 2);
     assert_eq!(result.is_ok(), true);
     assert_eq!(result.unwrap(), 0.0);
@@ -48,12 +53,15 @@ impl<T: Default + Clone> Matrix<T> {
         }
     }
 
-    /*!
+    /**
     set item to matrix.
 
     # Examples
 
     ```
+    use new_york_utils::Matrix;
+
+    let mut matrix = Matrix::new(3, 4);
     let result = matrix.set(1, 2, 1.0);
     assert_eq!(result.is_ok(), true);
     assert_eq!(matrix.get(1, 2).unwrap(), 1.0);
@@ -98,6 +106,4 @@ mod tests {
         assert_eq!(matrix.get(3, 3).is_ok(), false);
         assert_eq!(matrix.get(2, 4).is_ok(), false);
     }
-}
-
 }
