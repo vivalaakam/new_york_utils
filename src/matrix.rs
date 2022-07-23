@@ -177,7 +177,7 @@ impl<T: Default + Clone + Debug> Matrix<T> {
                     return Err(val.unwrap_err());
                 }
 
-                matrix.set(row, column, val.unwrap());
+                let _ = matrix.set(row, column, val.unwrap());
             }
         }
 
@@ -216,7 +216,7 @@ impl<T: Default + Clone + Debug> Matrix<T> {
                     return Err(val.unwrap_err());
                 }
 
-                matrix.set(column, row, val.unwrap());
+                let _ = matrix.set(column, row, val.unwrap());
             }
         }
 
@@ -229,6 +229,56 @@ impl<T: Default + Clone + Debug> Matrix<T> {
         }
 
         Ok(row * self.columns + column)
+    }
+
+    /**
+    add row into matrix
+
+    # Examples
+
+    ```
+    use new_york_utils::Matrix;
+
+    let mut matrix: Matrix<i32> = Matrix::new(4, 3);
+    let raw_data = vec![0,0,0,0,0,0,0,0,0,0,0,0];
+    let _ = matrix.set_data(raw_data);
+
+    let add_row = matrix.add_row(1,vec![1,1,1,1]);
+    assert_eq!(add_row.is_ok(), true);
+    assert_eq!(format!("{:?}", matrix.get_data()), "Ok([0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0])");
+    ```
+     */
+    pub fn add_row(&mut self, row: usize, data: Vec<T>) -> UtilsResult<()> {
+        for i in 0..self.columns {
+            let _ = self.set(i, row, data[i].clone());
+        }
+
+        Ok(())
+    }
+
+    /**
+    add column into matrix
+
+    # Examples
+
+    ```
+    use new_york_utils::Matrix;
+
+    let mut matrix: Matrix<i32> = Matrix::new(4, 3);
+    let raw_data = vec![0,0,0,0,0,0,0,0,0,0,0,0];
+    let _ = matrix.set_data(raw_data);
+
+    let add_column = matrix.add_column(1,vec![1,1,1]);
+    assert_eq!(add_column.is_ok(), true);
+    assert_eq!(format!("{:?}", matrix.get_data()), "Ok([0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0])");
+    ```
+     */
+    pub fn add_column(&mut self, column: usize, data: Vec<T>) -> UtilsResult<()> {
+        for i in 0..self.rows {
+            let _ = self.set(column, i, data[i].clone());
+        }
+
+        Ok(())
     }
 }
 
