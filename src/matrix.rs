@@ -2,6 +2,7 @@ use std::fmt::Debug;
 
 use crate::error::{UtilsError, UtilsResult};
 
+#[derive(Debug)]
 pub struct Matrix<T> {
     columns: usize,
     rows: usize,
