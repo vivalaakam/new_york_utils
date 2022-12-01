@@ -2,10 +2,10 @@ use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 pub struct Buffer<T> {
     vals: Vec<T>,
-    pub(crate) len: usize,
+    len: usize,
     pushes: usize,
-    pub(crate) index: usize,
-    pub(crate) sum: T,
+    index: usize,
+    sum: T,
 }
 
 impl<T> Buffer<T>
@@ -44,37 +44,51 @@ where
         }
     }
 
-    pub fn get(&self, ind: usize) -> T {
+    /**
+    get buffer value
+
+    # Examples
+
+    ```
+    use new_york_utils::Buffer;
+
+    let mut buffer = Buffer::new(2);
+    buffer.push(1);
+    buffer.push(2);
+    assert_eq!(buffer.get_value(0), 2);
+    assert_eq!(buffer.get_value(1), 1);
+
+    buffer.push(3);
+    assert_eq!(buffer.get_value(0), 3);
+    assert_eq!(buffer.get_value(1), 2);
+    assert_eq!(buffer.get_value(2), 3);
+    ```
+     */
+    pub fn get_value(&self, ind: usize) -> T {
         self.vals
             .get((self.index + self.len - 1 + ind) % self.len)
             .expect("")
             .clone()
     }
-}
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+    /**
+    get buffer value
 
-    #[test]
-    fn buffer_f64() {
-        let mut buffer = Buffer::new(2);
-        buffer.push(1.);
-        assert_eq!(1.0, buffer.sum);
-        buffer.push(1.5);
-        assert_eq!(2.5, buffer.sum);
-        buffer.push(2.5);
-        assert_eq!(4.0, buffer.sum);
-    }
+    # Examples
 
-    #[test]
-    fn buffer_u64() {
-        let mut buffer: Buffer<u64> = Buffer::new(2);
-        buffer.push(1);
-        assert_eq!(1, buffer.sum);
-        buffer.push(2);
-        assert_eq!(3, buffer.sum);
-        buffer.push(3);
-        assert_eq!(5, buffer.sum);
+    ```
+    use new_york_utils::Buffer;
+
+    let mut buffer = Buffer::new(2);
+    buffer.push(1);
+    buffer.push(2);
+    assert_eq!(buffer.get_sum(), 3);
+
+    buffer.push(3);
+    assert_eq!(buffer.get_sum(), 5);
+    ```
+     */
+    pub fn get_sum(&self) -> T {
+        self.sum
     }
 }
