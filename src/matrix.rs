@@ -281,6 +281,46 @@ impl<T: Default + Clone + Debug> Matrix<T> {
 
         Ok(())
     }
+
+    /**
+    push row into matrix
+
+    # Examples
+
+    ```
+    use new_york_utils::Matrix;
+
+    let mut matrix: Matrix<i32> = Matrix::new(3, 0);
+    let push_row = matrix.push_row(vec![1,2,3]);
+    assert_eq!(push_row.is_ok(), true);
+
+    assert_eq!(matrix.get_shape(), vec![3, 1]);
+
+    assert_eq!(format!("{:?}", matrix.get_data()), "Ok([1, 2, 3])");
+
+    let push_row = matrix.push_row(vec![4,5,6]);
+    assert_eq!(push_row.is_ok(), true);
+
+    assert_eq!(matrix.get_shape(), vec![3, 2]);
+
+    assert_eq!(format!("{:?}", matrix.get_data()), "Ok([1, 2, 3, 4, 5, 6])");
+    ```
+    */
+
+    pub fn push_row(&mut self, data: Vec<T>) -> UtilsResult<()> {
+
+        if data.len() != self.columns {
+            return Err(UtilsError::WrongColumnSize);
+        }
+
+        let mut new_data = self.data.clone();
+        new_data.append(&mut data.clone());
+
+        self.data = new_data;
+        self.rows += 1;
+
+        Ok(())
+    }
 }
 
 #[cfg(test)]
